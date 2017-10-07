@@ -1,0 +1,19 @@
+<app-header></app-header>
+<div class="background"></div>
+
+<div id="main-container">
+  <div class="background"></div>
+  <div #convTainer id="conversation-container">
+    <div *ngFor="let msg of messages">
+      <text-msg *ngIf="msg.type === 'text'" [align]="msg.align" [text]="msg.text"></text-msg>
+    </div>
+  </div>
+
+
+  <div id="input-container">
+    <div>
+      <input [(ngModel)]="userInput" (keydown)="handleKeyDown($event)" placeholder="Aa" />
+      <button (click)="sendMessage()" id="send-button">Send</button>
+    </div>
+  </div>
+</div>

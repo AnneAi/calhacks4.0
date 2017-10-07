@@ -1,0 +1,92 @@
+@import '../../styles/colors.scss';
+@import '../../styles/metrics.scss';
+@import '../../styles/mixins.scss';
+
+:host {
+  position: relative;
+  height: 100vh;
+  @include display-flex();
+  @include flex-flow-column();
+
+  .background {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: url('../../assets/pattern.png');
+    z-index: -10;
+  }
+}
+
+#main-container {
+  position: relative;
+  @include flex-grow(1);
+  @include display-flex();
+  @include flex-flow-column();
+  width: $tablet-width;
+  margin: auto;
+  @include box-shadow(0, 0, 10px, $grey);
+
+  .background {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    // background-color: rgba(255,255,255,0.5);
+    background-image: url('../../assets/pattern.png');
+    @include filter-blur(3px);
+    z-index: -5;
+  }
+}
+
+#conversation-container {
+  @include flex-grow(1);
+
+  min-height: 0;
+  padding: 1em;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+#input-container {
+  @include flex(0,0,auto);
+  padding: 0 1em;
+
+  div {
+    @include display-flex();
+    border-top: 1px solid rgba(0,0,0,0.3);
+    padding: 1em 0;
+
+    input {
+      flex: 1;
+      padding: 1em;
+
+      @include border-radius-4(5px,0,0,5px);
+      border: 1px solid $grey-d;
+    }
+
+    #send-button {
+      @include flex(0,0,auto);
+      padding: 1em;
+
+      @include border-radius-4(0,5px,5px,0);
+      background-color: $white;
+      color: $grey-xd;
+      border: 1px solid $grey-d;
+      border-left: none;
+
+      &:hover {
+        background-color: $color-3;
+        color: $white;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $tablet-width) {
+  #main-container {
+    width: 100%;
+  }
+}
