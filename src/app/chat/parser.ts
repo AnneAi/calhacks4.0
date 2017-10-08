@@ -33,8 +33,8 @@ export class Parser {
             parsedMsg.push({
               align,
               type: 'mcq',
-              answer: pld.answer,
-              choices: pld.choices,
+              answer: parseInt(pld.answer),
+              choices: pld.choices.split(','),
               explanation: pld.explanation,
               wording: pld.wording
             });
