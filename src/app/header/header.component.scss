@@ -5,9 +5,13 @@
 :host {
   z-index: 100;
   background-color: $white;
-  padding: 1em;
   @include flex(0,0,auto);
   @include display-flex();
   @include justify-content-center();
   @include box-shadow(0,3px,3px,$grey);
+}
+
+h1 {
+  font-size: 4em;
+  color: $red;
 }
