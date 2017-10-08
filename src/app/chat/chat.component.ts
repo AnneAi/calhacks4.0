@@ -17,6 +17,7 @@ export class ChatComponent implements AfterViewChecked {
   private toScroll: boolean = false;
   private messages: any = [];
   private messagesStack: any = [];
+  private sessionId: string = this.guid();
   private typingDelay: number = 750;
   private userInput = '';
 
@@ -29,6 +30,14 @@ export class ChatComponent implements AfterViewChecked {
       } catch(err) { }
       this.toScroll = false;
     }
+  }
+
+  guid(): string {
+    const s4 = () => {
+      return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+    }
+
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
   }
 
   /* Adds a user message and send query to agent.
@@ -118,7 +127,7 @@ export class ChatComponent implements AfterViewChecked {
     .set('Content-Type', 'application/json; charset=utf-8');
 
     let body = {
-      sessionId: 1,
+      sessionId: this.sessionId,
       lang: 'en',
       query
     };
