@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { ChatComponent } from './chat/chat.component';
+import { MCQComponent } from './chat/messages/MCQ/mcq.component';
 import { TextComponent } from './chat/messages/text/text.component';
 import { VideoComponent } from './chat/messages/video/video.component';
 import { HeaderComponent } from './header/header.component';
@@ -15,6 +16,7 @@ import { SafePipe } from './pipes/safe.pipe';
   declarations: [
     AppComponent,
     ChatComponent,
+    MCQComponent,
     TextComponent,
     VideoComponent,
     HeaderComponent,

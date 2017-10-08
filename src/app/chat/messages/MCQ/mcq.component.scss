@@ -1,0 +1,77 @@
+@import '../../../../styles/colors.scss';
+@import '../../../../styles/mixins.scss';
+
+:host {
+  margin-top: 5px;
+  display: flex;
+}
+
+#container {
+  flex: 0 0 auto;
+  max-width: 80%;
+  box-sizing: padding-box;
+  word-wrap: break-word;
+  padding: 0.5em;
+  border-radius: 10px;
+
+  &[class*="right"] {
+    background-color: $color-1;
+    color: white;
+  }
+
+  &[class*="left"] {
+    background-color: $color-3;
+    color: white;
+  }
+}
+
+#filler {
+  flex-grow: 1;
+}
+
+.wording {
+  color: white;
+  font-style: italic;
+  font-size: 1.25em;
+}
+
+.choices {
+  @include display-flex();
+  @include flex-flow-column();
+  @include flex-flow-wrap();
+  @include justify-content-space-around();
+}
+
+.indent {
+  text-indent: 1em;
+}
+
+h1 {
+  text-align: center;
+}
+
+button {
+  width: 100%;
+  margin-top: 1em;
+  padding: 1.5em 6em;
+  cursor: pointer;
+  @include border-radius-1(5px);
+  font-weight: bold;
+  font-size: 1em;
+  background-color: rgba(0,0,0,0);
+  border: 2px solid #FFFFFF;
+  color: #FFFFFF;
+
+  &:hover {
+    background-color: #FFFFFF;
+    color: $color-1;
+  }
+
+  &[class*="choice"] {
+    width: 49%;
+    margin-top: 0.5em;
+    padding: 1em 0;
+    text-align: center;
+    display: inline-block;
+  }
+}

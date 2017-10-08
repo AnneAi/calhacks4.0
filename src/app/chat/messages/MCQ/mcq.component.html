@@ -1,0 +1,28 @@
+<div *ngIf="align == 'right'" id="filler"></div>
+<div
+  [class.right]="align == 'right'"
+  [class.left]="align == 'left'"
+  id="container">
+
+  <h1>MCQ</h1>
+
+  <p class="wording"> {{ wording }} </p>
+
+  <div *ngIf="!answered" class="choices">
+    <button *ngFor="let choice of choices; index as i" (click)="checkAnswer(i);" class="choice">
+      {{choice}}
+    </button>
+  </div>
+
+  <div *ngIf="answered">
+    <p class="indent">
+      You answered {{ choices[studentAnswer] }}
+      <span *ngIf="success">and <span class="green">that's correct!</span></span>
+      <span *ngIf="!success">but the correct answer was {{ choices[answer] }}</span>
+    </p>
+
+    <h3>Explanation</h3>
+    <p class="indent">{{ explanation }}</p>
+  </div>
+</div>
+<div *ngIf="align == 'left'" id="filler"></div>

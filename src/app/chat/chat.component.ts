@@ -26,7 +26,7 @@ export class ChatComponent implements AfterViewChecked {
       } catch(err) { }
       this.toScroll = false;
     }
-  } 
+  }
 
   /* Adds a user message and send query to agent.
 

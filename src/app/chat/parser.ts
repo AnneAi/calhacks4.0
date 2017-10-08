@@ -30,6 +30,15 @@ export class Parser {
               type: 'video',
               url: `https://player.vimeo.com/video/${pld.id}`
             });
+          } else if (pld.type === 'exercise' && pld.exotype === 'mcq') {
+            parsedMsg.push({
+              align,
+              type: 'mcq',
+              answer: pld.answer,
+              choices: pld.choices,
+              explanation: pld.explanation,
+              wording: pld.wording
+            });
           }
           break;
       }
