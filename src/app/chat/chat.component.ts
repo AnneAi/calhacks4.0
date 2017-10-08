@@ -13,8 +13,11 @@ import { environment } from '../../environments/environment';
 export class ChatComponent implements AfterViewChecked {
 
   @ViewChild('convTainer') private convTainer: ElementRef;
+  private toDisplay: boolean = false;
   private toScroll: boolean = false;
   private messages: any = [];
+  private messagesStack: any = [];
+  private typingDelay: number = 750;
   private userInput = '';
 
   constructor(private http: HttpClient) { }
@@ -39,11 +42,11 @@ export class ChatComponent implements AfterViewChecked {
   private sendMessage(): void {
     if (!Utils.isEmpty(this.userInput)) {
 
-      this.addMessages([{
+      this.addMessage({
         align: 'right',
         type: 'text',
         text: this.userInput
-      }]);
+      });
 
       this.sendMessageToAgent(this.userInput);
 
@@ -59,9 +62,44 @@ export class ChatComponent implements AfterViewChecked {
   RETURN
     none
   */
-  private addMessages(msgs): void {
-    this.messages = this.messages.concat(msgs);
-    this.toScroll = true;
+  private addMessage(msg): void {
+    this.messages.push(msg);
+    this.toScroll = true
+  }
+
+  /* Adds messages in the stack of messages to be displayed.
+
+  PARAMS
+    msgs: array of messages to add to the stack
+
+  RETURN
+    none
+  */
+  private addToMessagesStack(msgs): void {
+    this.messagesStack = this.messagesStack.concat(msgs.reverse());
+    if (!this.toDisplay) {
+      this.toDisplay = true;
+      this.displayStack();
+    }
+  }
+
+  /* Displays the stacked messages.
+
+  PARAMS
+    none
+
+  RETURN
+    none
+  */
+  private displayStack(): void {
+    setTimeout(() => {
+      if (this.messagesStack.length > 0) {
+        this.addMessage(this.messagesStack.pop());
+        this.displayStack();
+      } else {
+        this.toDisplay = false;
+      }
+    }, this.typingDelay);
   }
 
   /* Sends a message to the agent.
@@ -87,7 +125,7 @@ export class ChatComponent implements AfterViewChecked {
 
     this.http.post(url, body, { headers })
     .subscribe(raw => {
-      this.addMessages(Parser.format(raw));
+      this.addToMessagesStack(Parser.format(raw));
     },
     err => { });
   }
