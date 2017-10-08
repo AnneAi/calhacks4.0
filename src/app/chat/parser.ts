@@ -12,7 +12,6 @@ export class Parser {
     let parsedMsg = [];
     let align = 'left';
     messages.forEach(msg => {
-      console.log(msg);
       switch (msg.type) {
         case 0: // text message
           parsedMsg.push({
