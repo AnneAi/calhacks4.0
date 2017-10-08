@@ -2,27 +2,30 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
 
-## Development server
+## Messages from Api.ai
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+#### video
 
-## Code scaffolding
+custom payload that contains
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
+> type: must be "video"
 
-## Build
+> platform: must be "vimeo"
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+> id: number at the end of the url when on a video on vimeo
 
-## Running unit tests
+#### MCQ
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+custom payload that contains
 
-## Running end-to-end tests
+> type: must be "exercise"
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
+> exotype: must be "mcq"
 
-## Further help
+> wording: the wording of the problem
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+> choices: array of choices like [ "answer 1", "answer 2", ...  ]
+
+> answer: the index of the right choice in the array of choices. For example if the riight answer is "answer 2", the index must equal 1 (indexes start at 0)
+
+> explanation: a text displayed to explained the exercise in detail once the student has answered
