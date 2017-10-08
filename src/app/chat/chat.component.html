@@ -6,6 +6,7 @@
   <div #convTainer id="conversation-container">
     <div *ngFor="let msg of messages">
       <text-msg *ngIf="msg.type === 'text'" [align]="msg.align" [text]="msg.text"></text-msg>
+      <video-msg *ngIf="msg.type === 'video'" [align]="msg.align" [url]="msg.url"></video-msg>
     </div>
   </div>
 

@@ -12,6 +12,7 @@ export class Parser {
     let parsedMsg = [];
     let align = 'left';
     messages.forEach(msg => {
+      console.log(msg);
       switch (msg.type) {
         case 0: // text message
           parsedMsg.push({
@@ -19,6 +20,17 @@ export class Parser {
             type: 'text',
             text: msg.speech
           });
+          break;
+
+        case 4: // custom payload
+          let pld = msg.payload
+          if (pld.type === 'video' && pld.platform === 'vimeo') {
+            parsedMsg.push({
+              align,
+              type: 'video',
+              url: `https://player.vimeo.com/video/${pld.id}`
+            });
+          }
           break;
       }
     });
