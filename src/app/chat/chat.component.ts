@@ -1,27 +1,37 @@
-import { Component, AfterViewChecked, ElementRef, ViewChild } from '@angular/core';
+import { Component, AfterViewChecked, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Subscription } from 'rxjs/Subscription';
 
 import { Utils } from '../../utils';
 import { Parser } from './parser';
 import { environment } from '../../environments/environment';
+import { DialogFlowService } from '../services/dialog-flow.service';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.scss']
+  styleUrls: [ './chat.component.scss' ],
+  providers: [ DialogFlowService ]
 })
-export class ChatComponent implements AfterViewChecked {
+export class ChatComponent implements AfterViewChecked, OnInit, OnDestroy {
 
   @ViewChild('convTainer') private convTainer: ElementRef;
   private toDisplay: boolean = false;
   private toScroll: boolean = false;
   private messages: any = [];
   private messagesStack: any = [];
-  private sessionId: string = this.guid();
   private typingDelay: number = 750;
   private userInput = '';
 
-  constructor(private http: HttpClient) { }
+  private subscription: Subscription;
+
+  constructor(private dialogFlowService: DialogFlowService) { }
+
+  ngOnInit(): void {
+    this.subscription = this.dialogFlowService.subscribe((raw) => {
+      this.addToMessagesStack(Parser.format(raw));
+    });
+  }
 
   ngAfterViewChecked() {
     if (this.toScroll) {
@@ -32,12 +42,8 @@ export class ChatComponent implements AfterViewChecked {
     }
   }
 
-  guid(): string {
-    const s4 = () => {
-      return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-    }
-
-    return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   /* Adds a user message and send query to agent.
@@ -120,23 +126,7 @@ export class ChatComponent implements AfterViewChecked {
     none
   */
   private sendMessageToAgent(query): void {
-    let url = `${environment.apiai.queryUrl}?v=${environment.apiai.v}`;
-
-    let headers = new HttpHeaders()
-    .set('Authorization', `Bearer ${environment.apiai.key}`)
-    .set('Content-Type', 'application/json; charset=utf-8');
-
-    let body = {
-      sessionId: this.sessionId,
-      lang: 'en',
-      query
-    };
-
-    this.http.post(url, body, { headers })
-    .subscribe(raw => {
-      this.addToMessagesStack(Parser.format(raw));
-    },
-    err => { });
+    this.dialogFlowService.sendMessage(query);
   }
 
   /* Handles keyboard events.
