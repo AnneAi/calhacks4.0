@@ -1,10 +1,8 @@
 import { Component, AfterViewChecked, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 
 import { Utils } from '../../utils';
 import { Parser } from './parser';
-import { environment } from '../../environments/environment';
 import { DialogFlowService } from '../services/dialog-flow.service';
 
 @Component({
